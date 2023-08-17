@@ -1,0 +1,38 @@
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-right: 10px; /* Espaçamento entre os botões */
+}
+
+/* Estilo para o botão Excluir */
+button:nth-child(1) {
+  background-color: #e74c3c; /* Vermelho */
+  color: white;
+}
+
+button:nth-child(1):hover {
+  background-color: #c0392b; /* Vermelho escuro */
+  transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+}
+
+button:nth-child(1):disabled {
+  background-color: #878585; /* Vermelho escuro */
+  opacity: 0.5;
+  cursor: default;
+  transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+}
+
+/* Estilo para o botão Editar */
+button:nth-child(2) {
+  background-color: #3498db; /* Azul */
+  color: white;
+}
+
+button:nth-child(2):hover {
+  background-color: #2980b9; /* Azul escuro */
+  transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+}
