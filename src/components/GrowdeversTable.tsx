@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 import Growdever from "../Types/GrowdeverType";
-import Message from "./Message";
+import Message from "./Message"; // Certifique-se de ajustar o caminho para o componente Message
 
 const StyledTable = styled.table`
   width: 100%;
@@ -39,7 +39,12 @@ function GrowdeverTable({
   editMode,
 }: GrowdeverTableProps) {
   const emptyGrowdevers = growdevers.filter(
-    (growdever) => !growdever.nome || growdever.nome.trim() === ""
+    (growdever) =>
+      !growdever.nome ||
+      growdever.nome.trim() === "" ||
+      growdever.idade === null ||
+      growdever.idade === 0 ||
+      typeof growdever.idade !== "number"
   );
 
   return (
@@ -47,8 +52,8 @@ function GrowdeverTable({
       {emptyGrowdevers.length > 0 && (
         <Message type="error">
           {emptyGrowdevers.length === 1
-            ? "1 registro possui nome vazio e foi excluído."
-            : `${emptyGrowdevers.length} registros possuem nomes vazios e foram excluídos.`}
+            ? "1 registro possui nome vazio, idade nula ou idade inválida e foi excluído."
+            : `${emptyGrowdevers.length} registros possuem nomes vazios, idades nulas ou idades inválidas e foram excluídos.`}
         </Message>
       )}
       <StyledTable>
@@ -61,7 +66,13 @@ function GrowdeverTable({
         </thead>
         <tbody>
           {growdevers.map((growdever, index) => {
-            if (!growdever.nome || growdever.nome.trim() === "") {
+            if (
+              !growdever.nome ||
+              growdever.nome.trim() === "" ||
+              growdever.idade === null ||
+              growdever.idade === 0 ||
+              typeof growdever.idade !== "number"
+            ) {
               return null;
             }
 
@@ -89,7 +100,7 @@ function GrowdeverTable({
       </StyledTable>
       {emptyGrowdevers.length === 0 && (
         <Message type="success">
-          Nenhum registro com nome vazio encontrado.
+          Nenhum registro com nome vazio, idade nula ou idade inválida encontrado.
         </Message>
       )}
     </>
