@@ -1,12 +1,7 @@
+import React from "react";
 import { styled } from "styled-components";
 import Growdever from "../Types/GrowdeverType";
-
-interface GrowdeverTableProps {
-  growdevers: Growdever[];
-  deletar: (id: string) => void;
-  editar: (id: string) => void;
-  editMode?: boolean;
-}
+import Message from "./Message";
 
 const StyledTable = styled.table`
   width: 100%;
@@ -30,14 +25,32 @@ const StyledTr = styled.tr`
   }
 `;
 
+interface GrowdeverTableProps {
+  growdevers: Growdever[];
+  deletar: (id: string) => void;
+  editar: (id: string) => void;
+  editMode?: boolean;
+}
+
 function GrowdeverTable({
   growdevers,
   deletar,
   editar,
   editMode,
 }: GrowdeverTableProps) {
+  const emptyGrowdevers = growdevers.filter(
+    (growdever) => !growdever.nome || growdever.nome.trim() === ""
+  );
+
   return (
     <>
+      {emptyGrowdevers.length > 0 && (
+        <Message type="error">
+          {emptyGrowdevers.length === 1
+            ? "1 registro possui nome vazio e foi excluído."
+            : `${emptyGrowdevers.length} registros possuem nomes vazios e foram excluídos.`}
+        </Message>
+      )}
       <StyledTable>
         <thead>
           <StyledTr>
@@ -48,7 +61,7 @@ function GrowdeverTable({
         </thead>
         <tbody>
           {growdevers.map((growdever, index) => {
-            if (!growdever.nome || growdever.nome.trim() === '') { 
+            if (!growdever.nome || growdever.nome.trim() === "") {
               return null;
             }
 
@@ -74,6 +87,11 @@ function GrowdeverTable({
           })}
         </tbody>
       </StyledTable>
+      {emptyGrowdevers.length === 0 && (
+        <Message type="success">
+          Nenhum registro com nome vazio encontrado.
+        </Message>
+      )}
     </>
   );
 }
